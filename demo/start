@@ -1,0 +1,15 @@
+
+Remember three things:
+
+	1) everything like {-this-} is a WoC tag.
+
+	2) You can jump on a tag by moving the cursor over it, and hitting
+	   CTRL-]
+	
+	3) You can go back by hitting CTRL-T
+
+Note: if you want to see what are the characters used in an highlighted text
+      use the  :p  vim command.
+
+That's all,
+now let's start the demo: {-jump here-}

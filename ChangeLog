@@ -1,0 +1,23 @@
+1.2
+
+Fixed a ``wocdownloader'' bug.
+
+Added the g:woc_global_index option. It specifies to always load a global
+index.woc file.
+
+Python syntax highlighting
+
+When WOCClearCache() is called automatically by WOC, only the last used cache
+is cleaned. If, instead, it is called by the :WocClearCache user command, the
+whole cache/ dir is removed.
+
+Added the g:woc_mappings option, to let the user define more easily its own
+mappings.
+
+1.1
+
+Added a little bit of documentation.
+
+1.0
+
+Initial release

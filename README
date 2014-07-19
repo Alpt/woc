@@ -1,0 +1,162 @@
+			{- Web Of Code -}
+
+			    Vim client
+
+ 	       http://freaknet.org/alpt/src/utils/woc
+
+
+This is the WoC client for Vim.
+If you don't know what WoC is, read doc/woc_protocol, or see 
+http://dev.dyne.org/trac.cgi/wiki/Woc
+
+Download the latest WoC-vim tarball from:
+http://www.freaknet.org/alpt/src/utils/woc/tarball/
+
+*
+** Installation
+*
+
+Read INSTALL
+
+
+*
+** Usage 
+*
+
+First of all, try the demo: demo/README
+
+*** Browsing
+
+Read the initial comment of woc.vim. You'll find the description of the
+commands and mappings defined by woc.vim.
+
+For a tutorial on WoC, try the demo: demo/README
+
+*** Linking
+
+You can define a generic WoC tag by placing, anywhere in a text, |{mytag}| .
+You can refer to that tag using {-mytag-} .
+In the location where the tags are defined you must generate the WoC tags
+files. Use woctags.sh for that.
+For example:
+
+	echo '|{mytag}|' >> dir/file	   # A a tag definition in dir/file
+	cd dir
+	woctags.sh .
+	cd ..
+
+	# {-dir/mytag-} refers to the tag ``mytag'' defined inside a
+	# file present in the directory ``dir/''
+	echo '{-dir/mytag-}' >> anotherfile 
+
+If you are editing source files, then cscope and ctags can be used to
+automatically generate the tags files for the sources. However if you're 
+also using WoC tags, you have to run woctags.sh.
+Example:
+
+	cd src/
+	echo 'int main() { }' > file.c
+	echo '/* |{comment_tag}| */' >> file.c
+	cscope -b; ctags * 	# At least execute one of the two
+	woctags.sh *.[ch]
+	cd ../
+	echo '{-src/main-}' > anotherfile   # a tag referring to the function
+					    # main
+	echo '{-comment_tag-}' >> anotherfile # a tag referring to the tag
+					      # placed in the comment
+
+Note: always run woctags.sh after cscope/ctags
+
+Read doc/woc_protocol for more information on the WoC tags syntax.
+
+*** Remote linking
+
+The best way to link a remote tag is to:
+	
+	1) define the URL alias in index.woc
+	   Copy the ./index.woc file and use it as a stub, or use
+	   demo/index.woc which is a working example.
+
+	   In short:
+		
+	      echo 'alias     myurlalias     http://url/to/remote/tag/' > index.woc
+
+	2) Use {-myurlalias/TAG-}. Where TAG is the remote tag.
+
+*** Publishing
+
+If you want to add WoC support in your online texts/sources you have several
+options:
+
+	* just include the tags files (tags, cscope.out, ...) in your online
+	  repository. This option is valid only if you aren't using generic 
+	  WoC tags (one like {-this-}).
+
+	* use the  woctags.sh  script to generate the .woc/ directory
+	  and the tags.woc, tags.rev.woc files.
+	  (remeber to execute woctags.sh _after_ cscope/ctags)
+	  Include the .woc/ directory in your online repository. 
+	  For example:
+	  
+	  	cd src/
+		cscope -b; ctags *
+		woctags.sh *.[ch]
+
+		rsync .woc my_online_repository:src/
+
+		# Or if you are using ViewVC/ViewCVS
+		cvs add .woc/
+		cvs add .woc/*
+		
+
+Note: If the index.woc has been used, then it must be included in the online 
+      repository, because the aliases defined in it, will be loaded by the WoC 
+      clients when reading the online texts.
+      It is sufficient to execute woctags.sh, which will compress index.woc
+      and copy it in .woc/
+
+*
+**  woctags.sh
+*
+
+When woctags.sh is executed, it will:
+	
+	1) Generate tags.woc and tags.rev.woc for all the files specified.
+           tags.woc and tags.rev.woc contains the generic WoC tags.
+	   (defined with |{mytag}|)
+	
+	2) Compress index.woc, tags.woc, tags.rev.woc, cscope.out, tags, TAGS
+	   The compressed file will be put in .woc/ (which is created inside
+	   the current directory).
+
+The usage of woctags.sh is simple:
+
+	woctags [dir|files] [options to 'find']
+
+	Note:  By default, 'find' searches recursively the current
+		directory. To disable this behaviour use -maxdepth 1
+
+	If the WOC_FILE_LIST enviroment variable has been defined, woctags.sh
+	will examine only the files listed in the $WOC_FILE_LIST file.
+
+Examples:
+	
+	# Parse everything in the current directory, except the tags files.
+	# Generate .woc/, tags.woc and tags.rev.woc
+	./woctags.sh
+
+	# Generate the WoC tags file, parsing only C sources present in the
+	# current directory and in all the subdirs
+	./woctags.sh ./ -name *.[ch]
+	
+	# The same of above, but limiting the search in the current directory,
+	# i.e without descending on any subdir
+	./woctags.sh ./ -name *.[ch] -maxdepth 1
+
+	# Use WOC_FILE_LIST
+	find ./ -name *.[ch] -maxdepth 1 > FileList
+
+	WOC_FILE_LIST="FileList" ./woctags.sh
+	# or
+	export WOC_FILE_LIST="FileList"
+	./woctags.sh

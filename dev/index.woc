@@ -1,0 +1,72 @@
+# INDEX_WOC
+
+#
+# The name of the package
+#
+#name		foo
+
+#
+# Optional description of the project.
+# Leave commented to ignore it.
+#
+#description	bla bla bla 
+
+#
+# Aliases.
+# [shortname/tag] will be expanded to [wocurl/tag]
+# 
+# Multiple aliases can be defined
+#
+# Example:
+#alias		shortname	wocurl
+#alias		shortname2	wocurl2
+#alias		openssl		http://openssl.org/woc_repository/
+#alias		netsukuku	http://cvs.hinezumi.org/viewcvs/*checkout*/netsukuku/%s?rev=HEAD
+
+#
+# Woc tags syntax.
+# Everything placed inside `syn_def_left' and `syn_def_right' is defined as a
+# WoC general tag (the text must be still in a singled line).
+#
+# Everything placed inside syn_ref_left and syn_ref_right is a reference to a
+# WoC tag.
+#
+# WARNING, they must not be equal:
+#
+# 		syn_def_left != syn_def_right
+# 		syn_ref_left != syn_ref_right
+# WARNING, the '\' character is not allowed
+#
+# WARNING, changing this stuff, you'll also have to modify the woctags.sh
+#          script.
+#
+syn_def_left	|[
+syn_def_right	]|
+
+syn_ref_left	[[
+syn_ref_right	]]
+
+#
+# The tags file.
+# If set to auto, WoC will use the first file matching one of the names
+# given by
+#	woc-scope --list-tags-fnames
+# 
+# The most common are
+#	tags, TAGS, cscope.out
+# 
+tags_file	auto
+
+#
+# Files used to store WoC tags
+#
+woc_tags_file		tags.woc
+woc_revtags_file	tags.rev.woc
+
+#
+# Tags files Compression.
+# If set to 1, or to yes, every tag file will be compressed.
+#
+tfile_compress	yes
+
+# INDEX_WOC

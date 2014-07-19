@@ -1,0 +1,149 @@
+#!/bin/bash
+# |{wocdownloader}|
+#
+# This script is used by woc
+
+#
+# TODO: |{TODO generic downloader}|
+# This script should download a file from a generic 
+# URL (http://, ftp://, scp://, file://, cvs://, ...)
+# However right now it just uses wget.
+# Do you know if a generic URL downloader exists already?
+# Remote.py of a-a-p, is a good start, but it should be hacked a bit.
+# 
+download_files() {
+	local something_downloaded
+	something_downloaded=0
+
+	for i in $@
+	do
+		# Substitute '%s' in the URL
+		u=`echo "$url" | sed -e "s#%s#$i#g"`
+
+		odir=`echo $i | sed -e 's#[^/]*$##'`
+		if [ ! -z "$odir" -a ! -d "$odir" ]
+		then
+			mkdir $odir
+		fi
+
+		if [ -f "$i" ]
+		then
+			# file already exists
+			something_downloaded=1
+			continue
+		fi
+
+		if ! wget $wget_opt $u -O $i
+		then
+			rm $i
+		else
+			something_downloaded=1
+		fi
+	done
+
+	return $something_downloaded
+}
+
+#
+# Note: a valid '%s' token must be specified in the URL (see the doc about
+# `woc_url')
+#
+wget_opt="-q "
+
+url="$1"
+if [ -z "$url" ]
+then
+	echo "wocdownloader must be called only by woc.vim!"
+fi
+
+shift
+files="$@" 
+
+bz2tags_files=".woc/index.woc.bz2 .woc/tags.woc.bz2 .woc/tags.rev.woc.bz2 .woc/tags.bz2 .woc/TAGS.bz2 .woc/cscope.out.bz2"
+tags_files="index.woc tags.woc tags.rev.woc tags TAGS cscope.out"
+
+if [ -z "$WOC_HOME" ]
+then 
+	WOC_HOME="`echo ~/.vim/woc/`"
+	if [ ! -d $WOC_HOME ]
+	then
+		mkdir -p $WOC_HOME
+	fi
+fi
+cd $WOC_HOME
+
+# Go to the cache
+if [ ! -d "cache/" ]; then mkdir cache/; fi
+cd cache
+
+# Calculate the md5 of the URL
+sum=`echo $url | md5sum | awk '{print $1}' 2> /dev/null`
+if [ -z "$sum" ]
+then
+	sum=`echo $url | md5 2> /dev/null` # BSD
+fi
+
+# Go to the directory associated to the url
+if [ ! -d "$sum" ]; then mkdir $sum; fi
+cd $sum
+
+#
+# Download the tags files
+#
+if [ ! -f .woc/.tagsdone ]
+then
+	if [ ! -d .woc/ ]
+	then
+		mkdir .woc/
+	fi
+
+	download_files $bz2tags_files
+	something_downloaded="$?"
+	if [ "$something_downloaded" == 0 ]
+	then
+		download_files $tags_files
+		something_downloaded="$?"
+	else
+		# Uncompress the compressed tags files
+		for i in `ls -1 .woc/*.bz2`
+		do
+			bunzip2 -fk $i
+			inoext=`echo $i | sed -e 's#\.bz2##'`
+			mv $inoext .	  # move to .woc/../
+		done
+	fi
+
+	# Create the dir tree 
+	OLD_IFS=$IFS
+	IFS=$'\n'
+	for i in $(cat tags tags.woc tags.rev.woc 2> /dev/null | grep -v \
+		'^!_TAG' | awk '{print $2}' | grep '/')
+	do
+		d=$(echo $i | sed -e 's#/[^/]*$##')
+		if [ -z "$d" ]; then continue; fi
+		if [ ! -d "./$d" ]; then
+			mkdir -p "./$d"
+		fi
+	done
+	IFS="$OLD_IFS"
+
+	touch .woc/.tagsdone
+else
+	something_downloaded=1
+fi
+
+if [ ! -z "$files" ]
+then
+	download_files $files
+	something_downloaded="$?"
+fi
+
+if [ "$something_downloaded" == 1 ]
+then
+	echo `pwd`	# we are in $sum/
+	exit 0
+else
+	cd ..
+	rm -r $sum
+	exit 1
+fi

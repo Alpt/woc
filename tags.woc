@@ -1,0 +1,28 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.6	//
+.\+	woc.vim	/^				     "|{.\\+}|" (old regexp)$/;"	d
+TAG	woc.vim	/^	" Highlights {-TAG-} and |{TAG}|$/;"	d
+TODO generic downloader	wocdownloader	/^# TODO: |{TODO generic downloader}|$/;"	d
+TODO mouse support	TODO	/^- |{TODO mouse support}|$/;"	d
+TODO wocpath	TODO	/^- |{TODO wocpath}|$/;"	d
+\(\(|{\)\@!.\)*	woc.vim	/^	syn match wocHyperTextEntry  "|{\\(\\(|{\\)\\@!.\\)*}|" contains=wocLeftDef,wocRightDef$/;"	d
+comment_tag	ERRORS	/^> comment_tag	ERRORS	\/^> 	echo '\\\/* |{comment_tag}| *\\\/' >> file.c$\/;"	d$/;"	d
+comment_tag	ERRORS	/^> comment_tag	README	\/^	echo '\\\/* |{comment_tag}| *\\\/' >> file.c$\/;"	d$/;"	d
+comment_tag	README	/^	echo '\/* |{comment_tag}| *\/' >> file.c$/;"	d
+mytag	ERRORS	/^> mytag	ERRORS	\/^> 	   (defined with |{mytag}|)$\/;"	d$/;"	d
+mytag	ERRORS	/^> mytag	ERRORS	\/^> 	echo '|{mytag}|' >> dir\\\/file	   # A a tag definition in dir\\\/file$\/;"	d$/;"	d
+mytag	ERRORS	/^> mytag	ERRORS	\/^> You can define a generic WoC tag by placing, anywhere in a text, |{mytag}| .$\/;"	d$/;"	d
+mytag	ERRORS	/^> mytag	README	\/^	   (defined with |{mytag}|)$\/;"	d$/;"	d
+mytag	ERRORS	/^> mytag	README	\/^	echo '|{mytag}|' >> dir\\\/file	   # A a tag definition in dir\\\/file$\/;"	d$/;"	d
+mytag	ERRORS	/^> mytag	README	\/^You can define a generic WoC tag by placing, anywhere in a text, |{mytag}| .$\/;"	d$/;"	d
+mytag	README	/^	   (defined with |{mytag}|)$/;"	d
+mytag	README	/^	echo '|{mytag}|' >> dir\/file	   # A a tag definition in dir\/file$/;"	d
+mytag	README	/^You can define a generic WoC tag by placing, anywhere in a text, |{mytag}| .$/;"	d
+mytag}| .$/;"	d> mytag	README	/^	echo '|{mytag}|' >> dir\/file	   # A a tag definition in dir\/file$/;"	d> mytag	README	/^	   (defined with |{mytag}|)$/;"	d> mytag	ERRORS	/^> You can define a generic WoC tag by placing, anywhere in a text, |{mytag}| .$/;"	d> mytag	ERRORS	/^> 	echo '|{mytag}|' >> dir\/file	   # A a tag definition in dir\/file$/;"	d> mytag	ERRORS	/^> 	   (defined with |{mytag}|)$/;"	d> comment_tag	README	/^	echo '\/* |{comment_tag}| *\/' >> file.c$/;"	d> comment_tag	ERRORS	/^> 	echo '\/* |{comment_tag	.ERRORS.swp	/^/;"	d
+overview	woc.psy	/^#|{overview}|$/;"	d
+woc_cache_url	woc.vim	/^			" |{woc_cache_url}|$/;"	d
+wocdownloader	wocdownloader	/^# |{wocdownloader}|$/;"	d

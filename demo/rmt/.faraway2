@@ -1,0 +1,29 @@
+
+
+Let's talk about Vim commands.
+
+It is possible to specify a VIM command to be executed, right after the jump.
+For example: {-omega:8-}
+the above tag tells Vim to jump to the tag ``omega'' and then moving the
+cursor at line 8 (this line!).
+Or {-omega:/VIM-} tells Vim to go the the first occurence of the word
+'VIM' after jumping on the definition of ``omega''.
+
+Since you can specify even null tags, the following tag reference is valid:
+	
+		   {-:/[G]ur/ | exe 'normal yy@"' | w "-}
+
+Try it! 
+(even if you don't have an Inet connection)
+
+:.! echo 'Gur frperg whzc vf: {-.frperg:"sw-}' | tr A-Za-z N-ZA-Mn-za-m
+
+
+We'll now explore the cscope commands.
+If you don't have cscope installed INSTALL IT RIGHT NOW:
+{-:! lynx http\://cscope.sourceforge.net/-}
+When you feel ready go here: {-code/woc-cscope-} 
+
+If you don't care, then go to learn the {-tagcmds-}
+
+|{omega}|

@@ -1,0 +1,34 @@
+|{tagcmds}|
+
+
+Consider this tag: {-tagcmds:"j-}. 
+The one-letter-command, at the end of the tag, (in this case "j ) is
+called TagCmd and it instructs WoC to execute a particular action on the tag.
+
+The default tagcmd is 'j', it means ``jump to the tag definition''. This is
+the reason why {-tagcmds-} is the same of {-tagcmds:"j-}.
+
+The list of all available commands are here: {-:Woctags help-}
+
+It's not necessary to specify the TagCmd inside the tag, in fact, you can use
+the following mappings, which are enabled automatically by woc.vim:
+
+ 			<C-]>	-->  :Woctags
+ 	
+ 			<C-_>s  -->  :Woctags s
+ 			<C-_>g  -->  :Woctags g
+ 			<C-_>c  -->  :Woctags c
+ 			<C-_>t  -->  :Woctags t
+ 			<C-_>e  -->  :Woctags e
+ 			<C-_>r  -->  :Woctags r
+ 			<C-_>f  -->  :Woctags fj
+ 			<C-_>i  -->  :Woctags i
+ 			<C-_>d  -->  :Woctags d
+
+For example hitting CTRL-_-r on {-tagcmds-} the same of jumping on
+{-tagcmds:"r-}. Try it!
+
+And that's all. 
+Read the WoC documentation for further info.
+
+Jump here {-:q-} ;)

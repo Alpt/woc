@@ -1,0 +1,5 @@
+Just use ./install.sh
+or simply execute the following commands:
+
+	cp wocdownloader ~/.vim/woc
+	cp woc.vim ~/.vim/plugin/

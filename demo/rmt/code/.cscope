@@ -1,0 +1,19 @@
+|{woc-cscope}|
+
+Well, well, well... this was one of the main reasons why WoC was developed: using
+cscope remotely.
+
+(Note: you're still in a remote location, try using the {-:!pwd-} vicmd to know
+where you are)
+
+Inside this remote location there are three C programs. Suppose we want to 
+define a jump on the definition of the main() function. We just have 
+to write: {-main-}
+Try jumping on it and come back.
+
+If we want to reference all the functions calling fopen: {-fopen:"c-}
+Similarly, let's see all the functions called by {-main:"d-}
+
+The "d and "c commands are not a Vi-cmd, they are a TagCmd.
+
+Use {-:Woctags help-} to get their complete list. then go to {-../tagcmds-}.

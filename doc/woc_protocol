@@ -1,0 +1,275 @@
+  	    		    {- Web Of Code -}
+
+  		   http://dev.dyne.org/trac.cgi/wiki/Woc
+
+
+WoC is a protocol which enables the use of hyperlinks in plain ASCII texts.
+It is specifically designed to support source codes, but it can be used in any
+text.
+
+WoC links are based on tags:
+
+	- a tag can be defined anywhere in a text
+
+	- it is possible to refer to any defined tag, even remote ones
+
+For source codes it's also possible to use ad-hoc tag generators: Cscope and
+Exuberant-Ctags.
+This allow the automatic generation of tags regarding functions definintion,
+variables declaration and so on.
+
+See http://idiki.dyne.org/wiki/WoC for a general introduction to the idea
+which triggered the development of WoC.
+
+This text describe the WoC protocol, i.e. how a WoC browser should explore a
+text.
+
+== Examples ==
+
+We'll start by examples. Go to the next paragraphs for syntax details.
+
+  {-tag-}		-->  Jumps on `tag'
+
+  {-tag:45-}		-->  Jumps on `tag', and when the file is opened, goes
+			     to line 45
+
+  {-http://a/url/tag-}	-->  Jumps on `tag' of the remote URL
+
+  {-alias/tag-}		-->  Expands `alias' to an URL, then jumps on `tag' of
+		             the remote URL
+
+  {-/path/tag:"fj-}  	-->  Jumps on file `/path/tag'
+
+  {-map.c:/node"fj-}	-->  Opens map.c and jumps to the first occurence of `node'
+
+Examples specific to the Vim WoC client:
+
+  {-:g/-->/# | ''-}	-->  Tells Vim to display only lines with '-->'
+			     inside, go to the last matching line, then come
+			     back here.
+
+  {-:exe "normal \<C-g>" "-}-->  Tells Vim to display the current status in
+				 the bottom bar
+
+
+== Alias file ==
+
+The index.woc file, which must be placed inside the same directory of the
+source/text files, holds the remote aliases.
+
+The aliases are specified in this way:
+
+{{{
+----%<---index.woc---%<----
+
+shortname	http://url/path/
+shortname	http://url/path/%s
+netsukuku	http://cvs.hinezumi.org/viewcvs/netsukuku/%s?rev=HEAD&content-type=text/vnd.viewcvs-markup
+ntk		http://www.hinezumi.org/viewcvs/*checkout*/netsukuku/%s?rev=HEAD
+localprj	file://local/dir/
+
+----%<---index.woc---%<----
+}}}
+
+`shortname' is the alias name, it is of the form:
+
+	shortname := \w\+ := [A-Za-z0-9_]\+
+
+The '%s' included in the URL is replaced by the file. 
+For example, if the following alias is defined
+  myalias	http://hostname/name/%s?opt=lala
+then, the WoC client will execute the following expantion:
+
+  {-myalias/TAG-}	 -->	{-http://hostname/name/TAG?opt=lala-}
+  {-myalias/a/path/TAG-} -->	{-http://hostname/name/a/path/TAG?opt=lala-}
+
+== Syntax ==
+
+=== Generic WoC tag ===
+
+  |{TAG}|
+
+where TAG:=[^\t], defines the generic WoC tag TAG.
+
+|{TAG}| can be placed anywhere in a text, f.e in a source code it can be
+placed inside a comment.
+
+Examples:
+	
+  |{mytag}|
+
+  |{another ~!@#$%^&*()_+}|"{:?></.,\';][ strange tag}|
+
+For the sake of the reader, it's adviced to use just the following characters
+in a tag definition: [A-Za-z0-9_ ]
+
+=== Tag reference ===
+
+  {-[RMT/]TAG[:VICMD]["TAGCMD]-}
+	
+( [TOKEN]   means that TOKEN is optional )
+
+This syntax specifies a reference to a particular TAG.
+The TAG will be searched using the TAGCMD command, in the remote url RMT.
+If a match is found, the relative file is opened, and then VICMD is executed
+as a VIM command.
+
+{{{
+
+	RMT/ 	:= alias || URL
+		  
+		   RMT/ can be an alias, defined in index.woc, or a full URL.
+		   A '/' must be always included at its end.
+
+		   RMT/ can be also omitted.
+
+	TAG 	:= [^:]
+		
+		   The referenced TAG. It can be a cscope, ctags or WoC tag.
+
+		   TAG can be also omitted.
+
+	"TAGCMD	:= 'j' || 'r' || 'fj' || 'c' || 'd' || 'e' || 'f' || 'g' || 'i' || 's' || 't'
+		   
+		   One of the above. A cmd to be applied on the TAG:
+		   
+		   	--- WoC tags commands ---
+			j:  Jump to this tag (default)
+			r:  Reverse jump: find references to this tag
+			fj: File Jump: Open this file
+		
+			--- cscope find commands ---
+		        c: Find functions calling this function
+		        d: Find functions called by this function
+		        e: Find this egrep pattern
+		        f: Find this file
+		        g: Find this definition
+		        i: Find files #including this file
+		        s: Find this C symbol
+		        t: Find assignments to
+
+		   No colon allowed inside here!
+
+		   "TAGCMD can be also omitted.
+
+	VICMD 	:= a valid VIM command
+		   The following commands must be supported by any WoC client:
+			
+			:line
+			/search
+			?search	   	
+		   
+		   Any colon inside VICMD must be escaped, e.g '\:'
+		   For example,
+			  :e map.c\:45   will be considered as  :e map.c:45
+
+		 	  :e map.c\\:45  is translated to 	:e map.c\:45
+
+		   VICMD can be also omitted.
+}}}
+
+Omitting a TAG is lecit, in fact, it can be used specify interactive VIM
+commands:
+
+  {-:vicmd-}	-->	executes `vicmd' on the current buffer
+
+
+==== Parsing notes ====
+
+VICMD is always the token at the right of the last ':' found in the tag
+reference. For this reason, if you need to use the ':' (colon) inside TAG
+or RMT, then you have to specify a VICMD at the end, f.e:
+
+{{{	
+	{-mytag:withcolon-} isn't correct because, it will be intepreted
+	in this way:
+		TAG   = 'mytag'
+		VICMD = 'withcolon'
+	
+	Instead, put a ':' at the end  -->  {-mytag:withcolon:-}
+		TAG   = 'mytag:withcolon'
+		VICMD = ''
+
+  	{-http://gnu.org/mytagwithoutcolon-}
+		TAG   = 'http'
+		VICMD = '//gnu.org/mytagwithoutcolon'
+	
+  	{-http://gnu.org/withoutcolon:-}
+		RMT   = 'http://gnu.org/'
+		TAG   = 'withoutcolon'
+		VICMD = ''
+}}}
+
+In other words, be careful when using colons!
+
+This same reasoning about ':' applies to '"' used insised a VICMD:
+{{{	
+	{-:exe "echo hello"-} is WRONG! because:
+		TAG 	= ''
+		VICMD 	= 'exe "echo hello'
+		TAGCMD	= ''
+
+	{-:exe "echo 'hello'" "-}is the correct form:
+		TAG 	= ''
+		VICMD 	= exe "echo 'hello'"
+		TAGCMD  = ''
+}}}
+
+The token at the right of the last '/' found in a tag, is considered
+as a tag, unless the "fj" tag command has been specified.
+Everything before the last '/' is considered as part of the URL.
+Examples:
+{{{
+	{-http://blabla/foo:-}
+		RMT   = 'http://blabla/'
+		TAG   = 'foo'
+
+	{-myalias/tag-}
+		RMT   = 'myalias'
+		TAG   = 'tag'
+	
+	{-a/path/tag-}
+		RMT   = 'a/path'
+		TAG   = 'tag'
+	
+	{-http://blabla/foo:"fj-}
+		RMT   = 'http://blabla/foo'
+
+	{-myalias/file:"fj-}
+		RMT   = 'myalias/file'
+	
+	{-a/path/file:"fj-}
+		RMT   = 'a/path/file'
+}}}
+
+== Publishing ==
+
+The publisher, before uploading its texts on a remote place, has to generate
+the WoC tags. This can be done using the woctags.sh script:
+http://cvs.hinezumi.org/viewcvs/*checkout*/woc/woctags.sh?rev=HEAD
+The script must be executed inside the current directory of the texts.
+
+The woctags.sh does the following:
+
+ * creates the tags.woc, tags.rev.woc (the WoC tags files) using Exuberant-Ctags
+ 
+ * compress any of the following files: tags.woc tags.rev.woc tags TAGS cscope.out
+
+ * moves all the generated files inside the .woc/ directory
+
+The publisher must include the .woc/ directory in the online repository.
+
+The publisher can avoid the above procedure by simply including the generated
+tags files in the online repository (f.e, cscope.out, tags, TAGS, ...)
+The WoC client, not finding the compressed files inside the .woc/ directory,
+will directly try to download the plain files from the remote URL.
+
+However, it's adviced the use of the compressed form.
+
+Note: If the index.woc has been used, then it must be included in the online 
+      repository, because the aliases defined in it, will be loaded by the WoC 
+      clients when reading the online texts.
+
+== Clients ==
+
+* Vim client: http://freaknet.org/alpt/src/utils/woc/readme

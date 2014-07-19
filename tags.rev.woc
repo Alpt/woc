@@ -1,0 +1,57 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.6	//
+TAG	woc.vim	/^	" Highlights {-TAG-} and |{TAG}|$/;"	r
+TODO generic downloader	TODO	/^- See {-TODO generic downloader-}$/;"	r
+TODO mouse support	.ERRORS.swp	/^/;"	r
+TODO mouse support	ERRORS	/^< " See {-TODO mouse support-}$/;"	r
+TODO mouse support	ERRORS	/^< TODO mouse support	woc.vim	\/^" See {-TODO mouse support-}$\/;"	r$/;"	r
+TODO mouse support	ERRORS	/^> 	" See {-TODO mouse support-}$/;"	r
+TODO mouse support	ERRORS	/^> TODO mouse support	woc.vim	\/^	" See {-TODO mouse support-}$\/;"	r$/;"	r
+TODO mouse support	woc.vim	/^	" See {-TODO mouse support-}$/;"	r
+TODO mouse support-}< nmap <C-]>  :call <SID>WOCTagCmd()<cr>123,136c134,135> com! -nargs=*           WocClearCache     call s:WOCClearCache(1)---< com! -nargs=*           WocClearCache     call s:WOCClearCache()120c131> " Version:	1.2> "> "			let g:woc_global_index = "/my/path/to/my_index.woc"> "			> "		For example, you can put something like this in your .vimrc:> "		g:woc_global_index can be set to a global ``index.woc'' file.86a92,97> "> "> " 			let g:woc_mappings = 1> "> " 		your .vimrc and define there your own mappings:> " 		If you don't like them, put the following line inside76a76,81< " 		If you don't like them, modify {-:/nmap-}63d62diff -r1.7 woc.vimretrieving revision 1.7RCS file: /home/cvsroot/woc/woc.vim,v===================================================================Index: woc.vim> 1.2---< 1.01c1diff -r1.1 versionretrieving revision 1.1RCS file: /home/cvsroot/woc/version,v===================================================================Index: version> mytag	README	/^You can define a generic WoC tag by placing, anywhere in a text, |{mytag}| .$/;"	d> mytag	README	/^	echo '|{mytag}|' >> dir\/file	   # A a tag definition in dir\/file$/;"	d> mytag	README	/^	   (defined with |{mytag}|)$/;"	d> mytag	ERRORS	/^> You can define a generic WoC tag by placing, anywhere in a text, |{mytag}| .$/;"	d> mytag	ERRORS	/^> 	echo '|{mytag}|' >> dir\/file	   # A a tag definition in dir\/file$/;"	d> mytag	ERRORS	/^> 	   (defined with |{mytag}|)$/;"	d> comment_tag	README	/^	echo '\/* |{comment_tag}| *\/' >> file.c$/;"	d> comment_tag	ERRORS	/^> 	echo '\/* |{comment_tag}| *\/' >> file.c$/;"	d12a13,20diff -r1.2 tags.wocretrieving revision 1.2RCS file: /home/cvsroot/woc/tags.woc,v===================================================================Index	.ERRORS.swp	/^/;"	r
+TODO wocpath	TODO	/^   form: {-TODO wocpath:"r-} $/;"	r
+TODO wocpath	woc.vim	/^   	" {-TODO wocpath-} . It is hardcoded.$/;"	r
+TODO wocpath	woc.vim	/^   " {-TODO wocpath-} . It is hardcoded.$/;"	r
+WOCClearCache	woc.psy	/^	    call {-WOCClearCache-} :$/;"	r
+WOCInitialize	woc.psy	/^	    call {-WOCInitialize-}:$/;"	r
+WOCLoadIndex	woc.psy	/^	    call {-WOCLoadIndex-} {$/;"	r
+WOCLoadRemote	woc.psy	/^  call {-WOCLoadRemote-} {$/;"	r
+WOCOpenFile	woc.psy	/^	    call {-WOCOpenFile:\/wocdownloader-} {$/;"	r
+WOCOpenFile	woc.psy	/^  call {-WOCOpenFile-} {$/;"	r
+WOC_HOME	TODO	/^   The other places just use {-WOC_HOME-}$/;"	r
+Web Of Code	README	/^			{- Web Of Code -}$/;"	r
+\(\({-\)\@!.\)*	woc.vim	/^	syn match wocHyperTextJump   "{-\\(\\({-\\)\\@!.\\)*-}" contains=wocLeftRef,wocRightRef$/;"	r
+\).\+	woc.vim	/^			             "\\({-\\).\\+-}" (old regexp)$/;"	r
+comment_tag	ERRORS	/^> comment_tag	ERRORS	\/^> 	echo '{-comment_tag-}' >> anotherfile # a tag referring to the tag$\/;"	r$/;"	r
+comment_tag	ERRORS	/^> comment_tag	README	\/^	echo '{-comment_tag-}' >> anotherfile # a tag referring to the tag$\/;"	r$/;"	r
+comment_tag	README	/^	echo '{-comment_tag-}' >> anotherfile # a tag referring to the tag$/;"	r
+dev/index.woc	TODO	/^- Use all the options defined in {-dev\/index.woc:"fj-}$/;"	r
+dir/mytag	README	/^	# {-dir\/mytag-} refers to the tag ``mytag'' defined inside a$/;"	r
+dir/mytag	README	/^	echo '{-dir\/mytag-}' >> anotherfile $/;"	r
+dir\/mytag	ERRORS	/^> dir\/mytag	ERRORS	\/^> 	# {-dir\\\/mytag-} refers to the tag ``mytag'' defined inside a$\/;"	r$/;"	r
+dir\/mytag	ERRORS	/^> dir\/mytag	ERRORS	\/^> 	echo '{-dir\\\/mytag-}' >> anotherfile $\/;"	r$/;"	r
+dir\/mytag	ERRORS	/^> dir\/mytag	README	\/^	# {-dir\\\/mytag-} refers to the tag ``mytag'' defined inside a$\/;"	r$/;"	r
+dir\/mytag	ERRORS	/^> dir\/mytag	README	\/^	echo '{-dir\\\/mytag-}' >> anotherfile $\/;"	r$/;"	r
+doc/woc_protocol	woc.psy	/^Read {-doc\/woc_protocol:"fj-} for more information.$/;"	r
+mytag	ERRORS	/^> mytag	ERRORS	\/^> You can refer to that tag using {-mytag-} .$\/;"	r$/;"	r
+mytag	ERRORS	/^> mytag	README	\/^You can refer to that tag using {-mytag-} .$\/;"	r$/;"	r
+mytag	README	/^You can refer to that tag using {-mytag-} .$/;"	r
+mytag	woc.vim	/^"		For example, if the tag is {-mytag:"c-} and `tagcmd' is 'j', then$/;"	r
+mytag	woc.vim	/^" For example, if the tag is {-mytag:"c-} and `a:1' is 'j', then the action$/;"	r
+myurlalias/TAG	README	/^	2) Use {-myurlalias\/TAG-}. Where TAG is the remote tag.$/;"	r
+myurlalias\/TAG	ERRORS	/^> myurlalias\/TAG	ERRORS	\/^> 	2) Use {-myurlalias\\\/TAG-}. Where TAG is the remote tag.$\/;"	r$/;"	r
+myurlalias\/TAG	ERRORS	/^> myurlalias\/TAG	README	\/^	2) Use {-myurlalias\\\/TAG-}. Where TAG is the remote tag.$\/;"	r$/;"	r
+overview	woc.vim	/^"		script, or jump to {-overview-}$/;"	r
+src/main	README	/^	echo '{-src\/main-}' > anotherfile   # a tag referring to the function$/;"	r
+src\/main	ERRORS	/^> src\/main	ERRORS	\/^> 	echo '{-src\\\/main-}' > anotherfile   # a tag referring to the function$\/;"	r$/;"	r
+src\/main	ERRORS	/^> src\/main	README	\/^	echo '{-src\\\/main-}' > anotherfile   # a tag referring to the function$\/;"	r$/;"	r
+tagref1-} bla bla {-tagref2	TODO	/^	{-tagref1-} bla bla {-tagref2-}$/;"	r
+this	README	/^	  WoC tags (one like {-this-}).$/;"	r
+woc_cache_url	woc.psy	/^	save rurl in {-woc_cache_url-}$/;"	r
+wocdownloader	woc.psy	/^	call {-wocdownloader:"fj-} {$/;"	r
+wocdownloader	woc.vim	/^"		- ~\/.vim\/woc\/ must contain the {-wocdownloader-} script!$/;"	r
+woctags.sh	TODO	/^- {-woctags.sh:"fj-} has a regexp bug:$/;"	r

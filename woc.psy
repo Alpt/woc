@@ -1,0 +1,119 @@
+#|{overview}|
+#
+# General HLL overview of WoC					
+#
+#
+# --
+#
+# To know what a `HLL overview' is, see:
+#	 http://idiki.dyne.org/wiki/HLL_overview
+#
+
+The full tag syntax is: 
+	
+	RMT/TAG:VICMD"TAGCMD
+
+Read {-doc/woc_protocol:"fj-} for more information.
+
+
+If the tag is activated (clicked):
+	
+	* Download tags files (cscope.out, tags, tags.woc, ...) from RMT (the
+	  remote host)
+
+	* Download also index.woc from RMT, loading the options
+	
+	* Execute the TAGCMD on TAG. The result will be the pair [pfile, pline]
+	  where
+	  	pfile = the file where the TAG resides
+		pline = the line where the TAG resides
+
+	* Download pfile from RMT and open it
+
+	* Go to line pline
+
+	* Execute VICMD as a vim command
+	
+#
+# Detailed overview
+#
+
+* On file open "/path/file":
+
+  call {-WOCOpenFile-} {
+
+	if exists "/path/index.woc",
+	    call {-WOCLoadIndex-} {
+
+		load /path/index.woc
+		load options from index.woc
+		load aliases from options, overwrite current aliases
+	    }
+
+	else
+	    call {-WOCInitialize-}:
+
+		load default options
+
+
+	# Load the WoC tag files and tell Vim to consider them
+	load /path/tags.woc[.gz]
+	set tagf+=/path/tags.woc
+	load /path/tags.rev.woc[.gz]
+
+	# If the opened file is located in the woc cache, then the user has
+	# probably jumped on a remote tag. We have to download this file.
+	if "/path/" =~ "~woc/cache/\(\w+\)/" :
+	    call {-WOCOpenFile:/wocdownloader-} {
+
+	    	# The name of the directories inside the woc cache is the
+		# md5 of their associated URL
+		url_md5=\1	# \1 is the match from the above regexp
+		cd /path
+		
+		# s:woc_cache_url containes the mapping md5 --> URL
+		load RURL from s:woc_cache_url[url_md5]
+
+		
+		download "file" from  RURL
+		open "file"
+	    }
+  }
+
+
+* On JumpOnTag, if tag ~=  TAG[:VICMD] :
+	# Just a local Tag. Mimic the normal Vim behaviour
+	local jump/cscope on TAG
+	exec VICMD
+
+
+* On JumpOnTag, if tag ~=  RMT/TAG:[VICMD"TAGCMD:
+	# A remote tag
+
+  call {-WOCLoadRemote-} {
+
+	rurl = expand alias from RMT
+	rdir = ~woc/cache/`md5sum rurl`/
+
+	cd rdir
+	call {-wocdownloader:"fj-} {
+		get rurl/index.woc
+		get rurl/tags.woc
+		get rurl/tags.rev.woc
+		get rurl/tags_file
+	}
+
+	# CDing to rurl/ will cause Vim to consider the downloaded tags files.
+	cd rurl/
+  }
+
+	save rurl in {-woc_cache_url-}
+
+	jump/cscope on TAG
+
+
+* On vim quit:
+	if g:woc_clear_cache is set:
+
+	    call {-WOCClearCache-} :
+		rm -r ~woc/cache/*

@@ -1,0 +1,25 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.6	//
+../tagcmds	code/.cscope	/^Use {-:Woctags help-} to get their complete list. then go to {-..\/tagcmds-}.$/;"	r
+.faraway2	faraway	/^Again if you don't have an Inet connection go here: {-.faraway2:"fj-}$/;"	r
+.frperg	.faraway2	/^:.! echo 'Gur frperg whzc vf: {-.frperg:"sw-}' | tr A-Za-z N-ZA-Mn-za-m$/;"	r
+:! lynx http\	.faraway2	/^{-:! lynx http\\:\/\/cscope.sourceforge.net\/-}$/;"	r
+code/woc-cscope	.faraway2	/^When you feel ready go here: {-code\/woc-cscope-} $/;"	r
+fopen	code/.cscope	/^If we want to reference all the functions calling fopen: {-fopen:"c-}$/;"	r
+main	code/.cscope	/^Similarly, let's see all the functions called by {-main:"d-}$/;"	r
+main	code/.cscope	/^to write: {-main-}$/;"	r
+omega	.faraway2	/^For example: {-omega:8-}$/;"	r
+omega	.faraway2	/^Or {-omega:\/VIM-} tells Vim to go the the first occurence of the word$/;"	r
+omega	faraway	/^For example, jumping on {-omega:0-}, will take you to the definition of omega$/;"	r
+omega	faraway	/^To know more, jump on {-omega:0-}$/;"	r
+rmtdemo/rmt/faraway	faraway	/^{-rmtdemo\/rmt\/faraway-}.$/;"	r
+tagcmds	.cmds	/^Consider this tag: {-tagcmds:"j-}. $/;"	r
+tagcmds	.cmds	/^For example hitting CTRL-_-r on {-tagcmds-} the same of jumping on$/;"	r
+tagcmds	.cmds	/^the reason why {-tagcmds-} is the same of {-tagcmds:"j-}.$/;"	r
+tagcmds	.cmds	/^{-tagcmds:"r-}. Try it!$/;"	r
+tagcmds	.faraway2	/^If you don't care, then go to learn the {-tagcmds-}$/;"	r
+tagcmds-} is the same of {-tagcmds	.cmds	/^the reason why {-tagcmds-} is the same of {-tagcmds:"j-}.$/;"	r

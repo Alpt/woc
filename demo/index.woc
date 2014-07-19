@@ -1,0 +1,20 @@
+# INDEX_WOC
+
+#
+# Aliases.
+# [shortname/tag] will be expanded to [wocurl/tag]
+# 
+# Multiple aliases can be defined
+#
+# The '%s' included in the URL is replaced by the file. For example, using 
+# http://hostname/name/%s?opt=lala, the WoC client will expand it to
+# http://hostname/name/foo.c?opt=lala 
+# http://hostname/name/sub/baz.c?opt=lala
+#
+# This is very useful if you're using ViewVC, because you just need to use:
+# http://hostname/viewcvs/*checkout*/name/%s?rev=HEAD
+#
+alias		rmtdemo		http://fenix.olocolors.org/~alpt/woc/demo
+alias		cvsdemo		http://cvs.hinezumi.org/viewcvs/*checkout*/woc/demo/%s?rev=HEAD
+
+# INDEX_WOC

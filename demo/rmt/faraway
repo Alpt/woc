@@ -1,0 +1,20 @@
+|{faraway}|
+
+Hi there,
+I suppose you've come here after jumping on something like this:
+{-rmtdemo/rmt/faraway-}.
+
+Right now you're in a remote location, thus all the tag references you'll find
+here are relative to this remote place.
+
+For example, jumping on {-omega:0-}, will take you to the definition of omega
+inside this current remote location (thus you'll download another file).
+
+Note that the ':0' command will be executed right after the jump.
+To know more, jump on {-omega:0-}
+
+
+
+--
+
+Again if you don't have an Inet connection go here: {-.faraway2:"fj-}

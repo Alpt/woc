@@ -1,0 +1,35 @@
+
+- |{TODO wocpath}|
+
+   ~/.vim/woc/ is used as an hardcoded path only in some places.
+   These are the places where it is referenced in an hardcoded 
+   form: {-TODO wocpath:"r-} 
+
+   The other places just use {-WOC_HOME-}
+
+- See {-TODO generic downloader-}
+
+- Mouse support
+
+- |{TODO mouse support}|
+
+   How is it possible to get the position of the clicked point?
+   I don't know. If something like getmousepos(), then it's possible to nmap
+   these:
+
+	nmap <C-LeftMouse>  :call <SID>WOCMouseTagCmd()<cr>
+	nmap g<LeftMouse>  :call <SID>WOCMouseTagCmd()<cr>
+
+   Where WOCMouseTagCmd() uses getmousepos() instead of getpos()
+
+- Use all the options defined in {-dev/index.woc:"fj-}
+  Right now, only the aliases are used.
+
+- {-woctags.sh:"fj-} has a regexp bug:
+	{-tagref1-} bla bla {-tagref2-}
+
+  is parsed as: 'tagref1-} bla bla {-tagref2'
+  and not as two different tags 'tagref1' and 'tagref2'.
+
+- Support an embedde form of index.woc: it should be possible to specify the
+  aliases inside the current text file.
